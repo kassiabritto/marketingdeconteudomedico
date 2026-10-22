@@ -840,5 +840,14 @@ document.addEventListener("submit", async ev=>{
   }catch(e){ console.error(e); state.error=friendly(e); render(); }
 })();
 </script>
-</body>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js")
+        .catch((error) => {
+          console.error("Erro ao registrar o aplicativo:", error);
+        });
+    });
+  }
+</script></body>
 </html>
