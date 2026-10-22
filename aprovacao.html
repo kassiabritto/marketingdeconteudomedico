@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Área do cliente · Kássia Britto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#3A2A2A; --off:#FFFBF5;
+  --sage-dark:#5E7550; --sage:#9BAE88;
+  --sand-dark:#D2BC9C; --sand-light:#F6EEE2; --sand:#E9DAC4;
+  --wine-soft:#8A3A49; --wine:#6B1F2E;
+  --gold:#A9822F;
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --sans:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--ink);background:var(--off);line-height:1.55;font-size:16px;-webkit-font-smoothing:antialiased;min-height:100vh}
+img,svg,video{max-width:100%;display:block}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--sage-dark);outline-offset:2px}
+h1,h2,h3{font-family:var(--serif);color:var(--wine);line-height:1.1;font-weight:700}
+.stripes{height:12px;background:repeating-linear-gradient(90deg,var(--wine) 0 22px,var(--sand) 22px 44px,var(--sage) 44px 66px,var(--sand) 66px 88px)}
+.checker{height:28px;background:conic-gradient(var(--wine) 25%,var(--sand) 0 50%,var(--wine) 0 75%,var(--sand) 0) 0 0/28px 28px}
+.eyebrow{font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--sage-dark)}
+.muted{color:#7d6a66}
+.hide{display:none!important}
+
+/* botões */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:999px;font-weight:700;font-size:.95rem;border:2px solid var(--wine);background:transparent;color:var(--wine);transition:transform .15s,background .15s,color .15s;text-decoration:none}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:var(--wine);color:var(--off)}
+.btn.primary:hover{background:var(--wine-soft);border-color:var(--wine-soft)}
+.btn.ghost:hover{background:var(--wine);color:var(--off)}
+.btn.ok{background:var(--sage-dark);border-color:var(--sage-dark);color:#fff}
+.btn.ok:hover{background:#4c6140;border-color:#4c6140}
+.btn.sm{padding:8px 16px;font-size:.85rem}
+.btn.danger{border-color:#a33;color:#a33}
+.btn.danger:hover{background:#a33;color:#fff}
+.btn[disabled]{opacity:.55;pointer-events:none}
+.link{background:none;border:0;color:var(--wine);text-decoration:underline;font-weight:500;padding:0}
+
+/* campos */
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.field label{font-size:.82rem;font-weight:700;color:var(--wine);letter-spacing:.02em}
+.field input,.field select,.field textarea{padding:12px 14px;border:1.5px solid var(--sand-dark);border-radius:12px;background:#fff;width:100%}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--wine);box-shadow:0 0 0 3px rgba(107,31,46,.12)}
+.field textarea{min-height:130px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.err{background:#fbeaea;color:#8a2323;border:1px solid #efc4c4;padding:10px 14px;border-radius:12px;font-size:.9rem;margin-bottom:14px}
+.note{background:var(--sand-light);border:1px dashed var(--sand-dark);padding:10px 14px;border-radius:12px;font-size:.88rem;margin-bottom:14px}
+
+/* logo */
+.brand{display:flex;align-items:center;gap:12px;color:var(--wine)}
+.brand b{font-family:var(--serif);font-size:1.45rem;line-height:1;display:block}
+.brand small{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sage-dark);font-weight:700}
+
+/* login */
+.login{display:grid;grid-template-columns:1.05fr 1fr;min-height:100vh}
+.login-side{position:relative;background:var(--wine);color:var(--sand);padding:48px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.login-side::after{content:"";position:absolute;inset:auto 0 0 0;height:84px;background:conic-gradient(var(--wine) 25%,var(--sand) 0 50%,var(--wine) 0 75%,var(--sand) 0) 0 0/42px 42px;opacity:.95}
+.login-side .brand{color:var(--sand)}
+.login-side .brand small{color:var(--sage)}
+.login-side h1{color:var(--off);font-size:clamp(2.2rem,4.4vw,3.4rem);margin-bottom:14px}
+.login-side h1 em{color:var(--sage)}
+.login-side p{max-width:38ch;color:var(--sand);font-size:1.02rem}
+.login-main{display:flex;align-items:center;justify-content:center;padding:32px 24px;background:var(--off)}
+.login-card{width:100%;max-width:400px}
+.login-card h2{font-size:2.2rem;margin:6px 0 4px}
+.login-card .sub{margin-bottom:24px}
+.demo-box{margin-top:22px;padding:14px;border-radius:14px;background:var(--sand-light);border:1px dashed var(--sand-dark);font-size:.86rem}
+.demo-box .btn{margin:6px 6px 0 0}
+
+/* portal */
+.topbar{background:var(--off);border-bottom:1px solid var(--sand)}
+.topbar .in{max-width:1180px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.who{display:flex;align-items:center;gap:12px;font-size:.9rem}
+.who span{color:#7d6a66}
+.shell{max-width:1180px;margin:0 auto;padding:26px 20px 70px;display:grid;gap:26px}
+.shell.admin{grid-template-columns:250px 1fr}
+.side h3{font-size:1.15rem;margin-bottom:10px}
+.clients{display:flex;flex-direction:column;gap:6px}
+.client{display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;background:#fff;border:1.5px solid var(--sand);border-radius:14px;padding:11px 14px;transition:border-color .15s,background .15s}
+.client:hover{border-color:var(--sage)}
+.client.on{background:var(--wine);border-color:var(--wine);color:var(--off)}
+.client small{display:block;font-size:.74rem;opacity:.75}
+.count{min-width:24px;height:24px;border-radius:999px;background:var(--gold);color:#fff;font-size:.76rem;font-weight:700;display:grid;place-items:center;padding:0 7px}
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.page-head h1{font-size:clamp(2rem,4vw,2.8rem)}
+.page-head p{margin-top:6px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.tab{border:1.5px solid var(--sand-dark);background:transparent;border-radius:999px;padding:8px 16px;font-weight:700;font-size:.88rem;color:var(--wine);display:flex;gap:8px;align-items:center}
+.tab em{font-style:normal;font-size:.76rem;background:var(--sand);padding:1px 8px;border-radius:999px}
+.tab.on{background:var(--wine);color:var(--off);border-color:var(--wine)}
+.tab.on em{background:rgba(255,255,255,.2)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.chip{border:1px solid var(--sand-dark);background:#fff;border-radius:999px;padding:5px 13px;font-size:.82rem;font-weight:500}
+.chip.on{background:var(--sage);border-color:var(--sage);color:var(--ink);font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+.card{background:#fff;border:1.5px solid var(--sand);border-radius:18px;overflow:hidden;text-align:left;padding:0;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(107,31,46,.12)}
+.thumb{aspect-ratio:4/5;background:var(--sand-light);position:relative;overflow:hidden}
+.thumb img,.thumb video{width:100%;height:100%;object-fit:cover}
+.thumb-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--wine-soft);font-family:var(--serif);font-size:1.15rem;
+  background:conic-gradient(var(--sand-light) 25%,#fff 0 50%,var(--sand-light) 0 75%,#fff 0) 0 0/36px 36px}
+.thumb-ph i{font-style:normal;font-size:2rem;color:var(--wine)}
+.thumb .badge{position:absolute;top:10px;left:10px}
+.card-b{padding:13px 15px 15px}
+.card-b .meta{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--sage-dark)}
+.card-b h3{font-family:var(--sans);font-size:1rem;color:var(--ink);margin:3px 0 6px;font-weight:700;line-height:1.3}
+.card-b .when{font-size:.84rem;color:#7d6a66}
+.badge{display:inline-block;font-size:.72rem;font-weight:700;padding:4px 11px;border-radius:999px;letter-spacing:.02em;background:#fff;border:1.5px solid}
+.b-pendente{color:var(--gold);border-color:var(--gold)}
+.b-aprovado{color:#fff;background:var(--sage-dark);border-color:var(--sage-dark)}
+.b-ajuste{color:#fff;background:var(--wine);border-color:var(--wine)}
+.b-rascunho{color:#7d6a66;border-color:var(--sand-dark)}
+.empty{grid-column:1/-1;text-align:center;padding:54px 20px;border:1.5px dashed var(--sand-dark);border-radius:18px;color:#7d6a66;background:var(--sand-light)}
+.empty h3{font-size:1.6rem;margin-bottom:6px}
+
+/* modal */
+.overlay{position:fixed;inset:0;background:rgba(58,42,42,.55);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50;overflow:auto}
+.modal{background:var(--off);border-radius:22px;width:100%;max-width:980px;max-height:calc(100vh - 40px);overflow:auto;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.3)}
+.modal.narrow{max-width:620px}
+.modal .x{position:absolute;top:12px;right:14px;width:38px;height:38px;border-radius:50%;border:1.5px solid var(--sand-dark);background:#fff;font-size:1.2rem;line-height:1;z-index:3}
+.modal-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
+.pv-col{background:var(--sand-light);padding:26px;display:flex;align-items:flex-start;justify-content:center;border-right:1px solid var(--sand)}
+.det-col{padding:28px 28px 30px}
+.det-col h2{font-size:2rem;margin:8px 0 10px;padding-right:36px}
+.pv{position:relative;width:100%;max-width:340px;border-radius:16px;overflow:hidden;background:#fff;border:1.5px solid var(--sand-dark)}
+.pv-empty{display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;color:#7d6a66}
+.slides{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;height:100%;scrollbar-width:none}
+.slides::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:center;display:flex;align-items:center;justify-content:center;background:#f3ece0;height:100%}
+.slide img,.slide video{width:100%;height:100%;object-fit:contain}
+.pv-nav{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.9);color:var(--wine);font-size:1.1rem;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.pv-nav.l{left:8px}.pv-nav.r{right:8px}
+.pv-count{position:absolute;bottom:10px;right:10px;background:rgba(58,42,42,.75);color:#fff;font-size:.74rem;padding:3px 10px;border-radius:999px}
+.facts{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.cap{background:#fff;border:1.5px solid var(--sand);border-radius:14px;padding:14px 16px;white-space:pre-wrap;font-size:.96rem;max-height:240px;overflow:auto}
+.cap-h{display:flex;justify-content:space-between;align-items:center;margin:16px 0 6px}
+.cap-h b{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sage-dark)}
+.legenda-only .cap{max-height:none;font-size:1.05rem}
+.actions{margin-top:20px;padding-top:18px;border-top:1.5px solid var(--sand)}
+.actions .btns{display:flex;gap:10px;flex-wrap:wrap}
+.confirm{background:var(--sand-light);border:1.5px solid var(--sage);border-radius:14px;padding:14px 16px}
+.confirm p{margin-bottom:10px;font-weight:500}
+.adj{background:var(--sand-light);border:1.5px solid var(--wine-soft);border-radius:14px;padding:16px}
+.adj h3{font-size:1.35rem;margin-bottom:4px}
+.tagpick{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 12px}
+.tagpick .chip.on{background:var(--wine);border-color:var(--wine);color:#fff}
+.state-box{border-radius:14px;padding:14px 16px;margin-top:4px}
+.state-box.okk{background:#eef3ea;border:1.5px solid var(--sage)}
+.state-box.adjj{background:#f8ecee;border:1.5px solid var(--wine-soft)}
+.state-box b{display:block;margin-bottom:2px}
+.timeline{margin-top:18px;border-left:2px solid var(--sand-dark);padding-left:16px;display:flex;flex-direction:column;gap:12px}
+.ev{position:relative;font-size:.88rem}
+.ev::before{content:"";position:absolute;left:-23px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--sage);border:2px solid var(--off)}
+.ev.k-ajuste_solicitado::before{background:var(--wine)}
+.ev.k-aprovado::before{background:var(--sage-dark)}
+.ev small{color:#7d6a66}
+.ev .tg{display:inline-block;font-size:.72rem;background:var(--sand);border-radius:999px;padding:1px 9px;margin:2px 4px 0 0}
+.ev q{display:block;margin-top:3px;font-style:italic;quotes:none;color:var(--ink)}
+.tl-h{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sage-dark);font-weight:700;margin-top:22px}
+
+/* editor */
+.ed{padding:28px}
+.ed h2{font-size:2rem;margin-bottom:16px;padding-right:36px}
+.mlist{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.mi{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid var(--sand);border-radius:12px;padding:6px 10px 6px 6px}
+.mi .mt{width:46px;height:56px;border-radius:8px;background:var(--sand-light);overflow:hidden;flex:0 0 auto;display:grid;place-items:center;font-size:.7rem;color:#7d6a66}
+.mi .mt img,.mi .mt video{width:100%;height:100%;object-fit:cover}
+.mi .nm{flex:1;min-width:0;font-size:.86rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mi button{border:1.5px solid var(--sand-dark);background:#fff;border-radius:8px;width:30px;height:30px}
+.drop{border:2px dashed var(--sand-dark);border-radius:14px;padding:16px;text-align:center;background:var(--sand-light);font-size:.9rem}
+.check{display:flex;gap:10px;align-items:center;font-size:.92rem;margin:4px 0 18px}
+.check input{width:18px;height:18px;accent-color:var(--wine)}
+.ed-foot{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;font-size:.92rem;z-index:99;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.loading{display:grid;place-items:center;min-height:60vh;color:var(--wine);font-family:var(--serif);font-size:1.6rem}
+
+@media (max-width:860px){
+  .login{grid-template-columns:1fr}
+  .login-side{padding:30px 24px 110px;min-height:260px}
+  .shell.admin{grid-template-columns:1fr}
+  .clients{flex-direction:row;overflow-x:auto;padding-bottom:6px}
+  .client{flex:0 0 auto}
+  .modal-grid{grid-template-columns:1fr}
+  .pv-col{border-right:0;border-bottom:1px solid var(--sand)}
+  .overlay{padding:0;align-items:flex-end}
+  .modal{max-height:94vh;border-radius:22px 22px 0 0}
+  .row2{grid-template-columns:1fr}
+  .who span{display:none}
+}
+
+/* ===== Visual D ===== */
+body{background:var(--sand-light)}
+h1,h2,h3{font-weight:600}
+.btn{padding:13px 26px}
+.btn.sm{padding:9px 18px}
+.field input,.field select,.field textarea{border:2px solid #E1CFB3;border-radius:16px;padding:13px 16px;background:var(--off)}
+/* entrar */
+.login{max-width:1180px;margin:0 auto;gap:20px;padding:48px 20px;align-items:stretch;min-height:100vh}
+.login-side{border-radius:36px}
+.login-side::after{opacity:.0}
+.login-main{border-radius:36px;background:var(--off);border:1px solid #E1CFB3}
+.login-side h1{font-weight:600}
+@media(max-width:820px){.login{padding:20px 14px;gap:14px}.login-side{padding:32px 26px;gap:28px}}
+/* área logada */
+.topbar{background:transparent;border:0;padding:20px 20px 0}
+.topbar .in{background:var(--off);border:1px solid #E1CFB3;border-radius:999px;padding:11px 12px 11px 24px}
+.page-head h1{font-size:clamp(2.4rem,5vw,3.8rem);font-weight:600;letter-spacing:-.01em}
+.client{border:1px solid #E1CFB3;border-radius:18px;background:var(--off)}
+.client.on{border-color:var(--wine)}
+.tab{border:2px solid #E1CFB3;background:var(--off)}
+.tab.on{border-color:var(--wine)}
+.chip{border:2px solid #E1CFB3;background:var(--off);padding:6px 15px}
+.chip.on{border-color:var(--sage)}
+.card{border:1px solid #E1CFB3;border-radius:26px;background:var(--off)}
+.card:hover{box-shadow:0 12px 28px rgba(107,31,46,.12)}
+.empty{border-radius:26px;border:2px dashed #D9C5A6}
+.modal{border-radius:32px}
+.modal .x{border:2px solid #E1CFB3}
+</style>
+</head>
+<body>
+<div id="app"><div class="loading">Carregando…</div></div>
+<div id="modal"></div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* ============================================================
+   CONFIGURAÇÃO — preencha depois de criar o projeto no Supabase
+   (passo a passo no LEIA-ME.md). Enquanto estiver vazio, o portal
+   roda em MODO DEMONSTRAÇÃO, só no seu navegador, para você testar.
+   ============================================================ */
+const CONFIG = {
+  SUPABASE_URL: "https://xxzqllmrhodfuqkbfteq.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_xkBcCN97y0HlzNos_Y9X7Q_Xndcb4hv"   // chave pública (publishable); quem protege os dados são as regras do banco
+};
+const DEMO = !CONFIG.SUPABASE_URL || !CONFIG.SUPABASE_ANON_KEY || typeof supabase === "undefined";
+
+/* ---------- constantes ---------- */
+const FORMATS = {
+  carrossel:{label:"Carrossel",   ratio:"4/5",  icon:"▤"},
+  estatico: {label:"Post estático",ratio:"4/5", icon:"▢"},
+  reels:    {label:"Reels",       ratio:"9/16", icon:"▶"},
+  stories:  {label:"Stories",     ratio:"9/16", icon:"◔"},
+  legenda:  {label:"Legenda",     ratio:null,   icon:"¶"}
+};
+const STATUS = {rascunho:"Rascunho", pendente:"Aguardando aprovação", aprovado:"Aprovado", ajuste:"Ajuste solicitado"};
+const ADJ_TAGS = ["Imagem / vídeo","Texto da arte","Legenda","Data / horário","Informação médica","Outro"];
+const EV_LABEL = {criado:"Enviado para aprovação", aprovado:"Aprovado", ajuste_solicitado:"Ajuste solicitado", reenviado:"Nova versão enviada"};
+
+/* ---------- utilitários ---------- */
+const $ = (s,el=document)=>el.querySelector(s);
+const $$ = (s,el=document)=>[...el.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmtDate = d => d ? new Date(d+"T12:00:00").toLocaleDateString("pt-BR",{day:"2-digit",month:"short"}).replace(".","") : "Sem data";
+const fmtDT = d => new Date(d).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",year:"2-digit",hour:"2-digit",minute:"2-digit"});
+const uid = () => (crypto.randomUUID ? crypto.randomUUID() : "id-"+Date.now()+Math.random().toString(16).slice(2));
+function toast(msg){ const t=$("#toast"); t.innerHTML=`<div class="toast">${esc(msg)}</div>`; clearTimeout(toast._t); toast._t=setTimeout(()=>t.innerHTML="",3200); }
+const logo = (h=46,inv=false)=>{
+  const bg=inv?"#E9DAC4":"#6B1F2E", fg=inv?"#6B1F2E":"#E9DAC4", ring="#9BAE88";
+  return `<svg height="${h}" width="${h}" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="25" fill="${bg}" stroke="${ring}" stroke-width="3.5"/><text x="28" y="35.500" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="22" font-weight="700" letter-spacing="-.5" fill="${fg}">KB</text></svg>`;
+};
+const brand = (inv=false)=>`<div class="brand">${logo(46,inv)}<div><b>Kássia Britto</b><small>Marketing de conteúdo médico</small></div></div>`;
+
+/* ============================================================
+   CAMADA DE DADOS
+   ============================================================ */
+const urlCache = {};
+let sb = null;
+
+function supaApi(){
+  sb = supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+  const must = r => { if (r.error) throw r.error; return r.data; };
+  return {
+    async session(){ return (await sb.auth.getSession()).data.session; },
+    async signIn(email,password){ must(await sb.auth.signInWithPassword({email,password})); },
+    async signOut(){ await sb.auth.signOut(); },
+    async reset(email){ must(await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname})); },
+    async setPassword(password){ must(await sb.auth.updateUser({password})); },
+    onRecovery(cb){ sb.auth.onAuthStateChange(ev=>{ if(ev==="PASSWORD_RECOVERY") cb(); }); },
+    async me(){
+      const {data:{user}} = await sb.auth.getUser();
+      return must(await sb.from("profiles").select("*").eq("id",user.id).single());
+    },
+    async clients(){ return must(await sb.from("profiles").select("*").eq("role","client").order("name")); },
+    async saveClient(id,patch){ must(await sb.from("profiles").update(patch).eq("id",id)); },
+    async posts(){
+      return must(await sb.from("posts").select("*")
+        .order("scheduled_for",{ascending:true,nullsFirst:false}).order("created_at",{ascending:false}));
+    },
+    async savePost(p,eventKind){
+      const row = {id:p.id,client_id:p.client_id,title:p.title,format:p.format,caption:p.caption,
+        media:p.media.map(({path,type,name})=>({path,type,name})),link:p.link||null,
+        scheduled_for:p.scheduled_for||null,status:p.status,version:p.version,updated_at:new Date().toISOString()};
+      must(await sb.from("posts").upsert(row));
+      if(eventKind) must(await sb.from("post_events").insert({post_id:p.id,kind:eventKind,actor_id:state.user.id}));
+    },
+    async deletePost(p){
+      const paths=(p.media||[]).map(m=>m.path).filter(Boolean);
+      if(paths.length) await sb.storage.from("conteudos").remove(paths);
+      must(await sb.from("posts").delete().eq("id",p.id));
+    },
+    async removeFiles(paths){ if(paths.length) await sb.storage.from("conteudos").remove(paths); },
+    async upload(clientId,postId,file,i){
+      const ext=(file.name.split(".").pop()||"bin").toLowerCase().replace(/[^a-z0-9]/g,"");
+      const path=`${clientId}/${postId}/${Date.now()}-${i}.${ext}`;
+      must(await sb.storage.from("conteudos").upload(path,file,{contentType:file.type,upsert:false}));
+      return {path,type:file.type.startsWith("video")?"video":"image",name:file.name};
+    },
+    async urls(paths){
+      if(!paths.length) return {};
+      const data=must(await sb.storage.from("conteudos").createSignedUrls(paths,60*60*4));
+      const o={}; data.forEach(d=>{ if(d.signedUrl) o[d.path]=d.signedUrl; }); return o;
+    },
+    async review(id,decision,note,tags){
+      must(await sb.rpc("review_post",{p_post:id,p_decision:decision,p_note:note||null,p_tags:tags||[]}));
+    },
+    async resend(p){
+      must(await sb.from("posts").update({status:"pendente",version:(p.version||1)+1,reviewed_at:null,updated_at:new Date().toISOString()}).eq("id",p.id));
+      must(await sb.from("post_events").insert({post_id:p.id,kind:p.status==="rascunho"?"criado":"reenviado",actor_id:state.user.id}));
+    },
+    async events(postId){ return must(await sb.from("post_events").select("*").eq("post_id",postId).order("created_at")); }
+  };
+}
+
+/* ---- modo demonstração (localStorage, nada sai do navegador) ---- */
+function demoApi(){
+  const KEY="kb_portal_demo_v1";
+  const ph=(t,bg,fg,w=400,h=500)=>"data:image/svg+xml;utf8,"+encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="100%" height="100%" fill="${bg}"/><rect x="18" y="18" width="${w-36}" height="${h-36}" fill="none" stroke="${fg}" stroke-width="2" opacity=".5"/><text x="50%" y="48%" text-anchor="middle" font-family="Georgia,serif" font-size="30" font-weight="700" fill="${fg}">${t}</text><text x="50%" y="56%" text-anchor="middle" font-family="sans-serif" font-size="14" fill="${fg}" opacity=".7">arte de demonstração</text></svg>`);
+  const seed=()=>{
+    const c1="demo-cli-1", c2="demo-cli-2", now=Date.now(), d=n=>new Date(now+n*864e5).toISOString().slice(0,10);
+    return {
+      users:[
+        {id:"demo-admin",email:"kassia@demo.com",password:"demo",name:"Kássia Britto",role:"admin"},
+        {id:c1,email:"dra.helena@demo.com",password:"demo",name:"Dra. Helena Duarte",specialty:"Dermatologia",role:"client"},
+        {id:c2,email:"dr.rafael@demo.com",password:"demo",name:"Dr. Rafael Lima",specialty:"Ortopedia",role:"client"}
+      ],
+      posts:[
+        {id:"p1",client_id:c1,title:"5 mitos sobre protetor solar",format:"carrossel",caption:"Protetor solar é para todos os dias, não só para a praia.\n\nNeste carrossel, esclareço 5 dúvidas comuns. Salve para consultar depois.\n\nDra. Helena Duarte · Dermatologia · CRM-CE 00000 | RQE 0000",media:[
+          {type:"image",name:"capa.png",url:ph("5 mitos sobre protetor","#E9DAC4","#6B1F2E")},{type:"image",name:"2.png",url:ph("Mito 1","#F6EEE2","#5E7550")},{type:"image",name:"3.png",url:ph("Mito 2","#6B1F2E","#E9DAC4")}],
+          link:null,scheduled_for:d(2),status:"pendente",version:1,created_at:new Date(now-864e5).toISOString()},
+        {id:"p2",client_id:c1,title:"Reels · Como é a consulta dermatológica",format:"reels",caption:"Primeira vez no dermatologista? Veja o que esperar.",media:[{type:"image",name:"capa-reels.png",url:ph("Como é a consulta","#9BAE88","#3A2A2A",360,640)}],link:null,scheduled_for:d(4),status:"pendente",version:1,created_at:new Date(now-6e7).toISOString()},
+        {id:"p3",client_id:c1,title:"Post · Dia de cuidado com a pele",format:"estatico",caption:"Pele saudável começa com rotina simples.",media:[{type:"image",name:"post.png",url:ph("Rotina simples","#E9DAC4","#8A3A49")}],link:null,scheduled_for:d(-3),status:"aprovado",version:1,reviewed_at:new Date(now-2*864e5).toISOString(),created_at:new Date(now-5*864e5).toISOString()},
+        {id:"p4",client_id:c1,title:"Stories · Perguntas e respostas",format:"stories",caption:"",media:[{type:"image",name:"story.png",url:ph("Caixinha de perguntas","#6B1F2E","#F6EEE2",360,640)}],link:null,scheduled_for:d(-1),status:"ajuste",version:1,reviewed_at:new Date(now-864e5).toISOString(),created_at:new Date(now-4*864e5).toISOString()},
+        {id:"p5",client_id:c2,title:"Legenda · Dor lombar e postura",format:"legenda",caption:"Dor lombar não é normal.\n\nAjustes simples na rotina ajudam, mas dor persistente merece avaliação. Agende sua consulta.",media:[],link:null,scheduled_for:d(1),status:"pendente",version:1,created_at:new Date(now-6e7).toISOString()},
+        {id:"p6",client_id:c2,title:"Rascunho · Pós-operatório de joelho",format:"carrossel",caption:"",media:[],link:null,scheduled_for:d(7),status:"rascunho",version:1,created_at:new Date().toISOString()}
+      ],
+      events:[
+        {id:"e1",post_id:"p1",kind:"criado",created_at:new Date(now-864e5).toISOString(),tags:[]},
+        {id:"e2",post_id:"p3",kind:"criado",created_at:new Date(now-5*864e5).toISOString(),tags:[]},
+        {id:"e3",post_id:"p3",kind:"aprovado",created_at:new Date(now-2*864e5).toISOString(),tags:[]},
+        {id:"e4",post_id:"p4",kind:"criado",created_at:new Date(now-4*864e5).toISOString(),tags:[]},
+        {id:"e5",post_id:"p4",kind:"ajuste_solicitado",note:"Trocar a frase da caixinha e usar a foto nova do consultório.",tags:["Texto da arte","Imagem / vídeo"],created_at:new Date(now-864e5).toISOString()}
+      ]
+    };
+  };
+  let db; try{ db=JSON.parse(localStorage.getItem(KEY)); }catch{}
+  if(!db||!db.users) db=seed();
+  const save=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(db)); }catch(e){ toast("Memória do navegador cheia (modo demo)."); } };
+  const cur=()=>db.users.find(u=>u.id===sessionStorage.getItem("kb_demo_uid"));
+  const visible=()=>{ const u=cur(); return u.role==="admin"?db.posts:db.posts.filter(p=>p.client_id===u.id&&p.status!=="rascunho"); };
+  const clone=o=>JSON.parse(JSON.stringify(o));
+  const fileToUrl=f=>new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=()=>res(URL.createObjectURL(f)); r.readAsDataURL(f); });
+  return {
+    async session(){ return cur()?{demo:true}:null; },
+    async signIn(email,password){
+      const u=db.users.find(x=>x.email===email.trim().toLowerCase()&&x.password===password);
+      if(!u) throw new Error("Invalid login credentials");
+      sessionStorage.setItem("kb_demo_uid",u.id);
+    },
+    async signOut(){ sessionStorage.removeItem("kb_demo_uid"); },
+    async reset(){ },
+    async setPassword(){ },
+    onRecovery(){ },
+    async me(){ return clone(cur()); },
+    async clients(){ return clone(db.users.filter(u=>u.role==="client")); },
+    async saveClient(id,patch){ Object.assign(db.users.find(u=>u.id===id),patch); save(); },
+    async posts(){ return clone(visible()).sort((a,b)=>(a.scheduled_for||"9").localeCompare(b.scheduled_for||"9")); },
+    async savePost(p,eventKind){
+      const row=clone({...p,media:p.media.map(({path,type,name,url})=>({path,type,name,url}))});
+      const i=db.posts.findIndex(x=>x.id===p.id);
+      if(i>=0) db.posts[i]={...db.posts[i],...row}; else db.posts.push({...row,created_at:new Date().toISOString()});
+      if(eventKind) db.events.push({id:uid(),post_id:p.id,kind:eventKind,tags:[],created_at:new Date().toISOString()});
+      save();
+    },
+    async deletePost(p){ db.posts=db.posts.filter(x=>x.id!==p.id); db.events=db.events.filter(e=>e.post_id!==p.id); save(); },
+    async removeFiles(){ },
+    async upload(clientId,postId,file){ return {url:await fileToUrl(file),type:file.type.startsWith("video")?"video":"image",name:file.name}; },
+    async urls(){ return {}; },
+    async review(id,decision,note,tags){
+      const p=db.posts.find(x=>x.id===id);
+      if(!p||p.status!=="pendente") throw new Error("Este conteúdo não está aguardando aprovação");
+      if(decision==="ajuste"&&!(note||"").trim()) throw new Error("Descreva o ajuste que precisa ser feito");
+      p.status=decision; p.reviewed_at=new Date().toISOString();
+      db.events.push({id:uid(),post_id:id,kind:decision==="aprovado"?"aprovado":"ajuste_solicitado",note:(note||"").trim()||null,tags:tags||[],created_at:new Date().toISOString()});
+      save();
+    },
+    async resend(p){
+      const x=db.posts.find(y=>y.id===p.id); const was=x.status;
+      x.status="pendente"; x.version=(x.version||1)+1; x.reviewed_at=null;
+      db.events.push({id:uid(),post_id:p.id,kind:was==="rascunho"?"criado":"reenviado",tags:[],created_at:new Date().toISOString()}); save();
+    },
+    async events(postId){ return clone(db.events.filter(e=>e.post_id===postId)).sort((a,b)=>a.created_at.localeCompare(b.created_at)); },
+    reset_demo(){ localStorage.removeItem(KEY); sessionStorage.removeItem("kb_demo_uid"); location.reload(); }
+  };
+}
+
+const Api = DEMO ? demoApi() : supaApi();
+
+/* ============================================================
+   ESTADO
+   ============================================================ */
+const state = {
+  user:null, clients:[], posts:[], clientId:null,
+  status:"todos", format:"all",
+  mode:"login", recovery:false, busy:false, error:"", info:"",
+  modal:null
+};
+const isAdmin = ()=>state.user?.role==="admin";
+const mediaSrc = m => m.url || urlCache[m.path] || null;
+const currentClient = ()=>state.clients.find(c=>c.id===state.clientId);
+const visiblePosts = ()=> isAdmin() ? state.posts.filter(p=>p.client_id===state.clientId) : state.posts;
+const firstName = n => (n||"").replace(/^(dra?\.?|dr)\s+/i,"").split(" ")[0] || "";
+
+async function loadData(){
+  if(isAdmin()){
+    state.clients = await Api.clients();
+    if(!state.clients.find(c=>c.id===state.clientId)) state.clientId = state.clients[0]?.id || null;
+  }
+  state.posts = await Api.posts();
+  const paths=[...new Set(state.posts.flatMap(p=>(p.media||[]).map(m=>m.path).filter(Boolean)))];
+  Object.assign(urlCache, await Api.urls(paths));
+}
+async function enter(){
+  state.user = await Api.me();
+  await loadData();
+  state.format = "all";
+  state.status = (!isAdmin() && state.posts.some(p=>p.status==="pendente")) ? "pendente" : "todos";
+  render();
+}
+
+/* ============================================================
+   RENDER — telas
+   ============================================================ */
+function render(){
+  const app=$("#app");
+  if(state.recovery) app.innerHTML = loginView("recovery");
+  else if(!state.user) app.innerHTML = loginView(state.mode);
+  else app.innerHTML = portalView();
+  renderModal();
+}
+
+function loginView(mode){
+  const titles={login:["Área do cliente","Entre para revisar e aprovar seus conteúdos."],
+    reset:["Recuperar senha","Enviaremos um link para o seu e-mail."],
+    recovery:["Nova senha","Escolha uma senha nova para a sua conta."]};
+  const [t,s]=titles[mode];
+  const err = state.error?`<div class="err" role="alert">${esc(state.error)}</div>`:"";
+  const info = state.info?`<div class="note">${esc(state.info)}</div>`:"";
+  let form;
+  if(mode==="login") form=`
+    <form data-form="login" autocomplete="on">
+      <div class="field"><label for="em">E-mail</label><input id="em" name="email" type="email" required autocomplete="username" placeholder="voce@clinica.com.br"></div>
+      <div class="field"><label for="pw">Senha</label><input id="pw" name="password" type="password" required autocomplete="current-password"></div>
+      <button class="btn primary" style="width:100%" ${state.busy?"disabled":""}>${state.busy?"Entrando…":"Entrar"}</button>
+      <p style="margin-top:14px;text-align:center"><button type="button" class="link" data-act="go-reset">Esqueci minha senha</button></p>
+    </form>`;
+  else if(mode==="reset") form=`
+    <form data-form="reset">
+      <div class="field"><label for="em">E-mail da sua conta</label><input id="em" name="email" type="email" required autocomplete="username"></div>
+      <button class="btn primary" style="width:100%" ${state.busy?"disabled":""}>Enviar link</button>
+      <p style="margin-top:14px;text-align:center"><button type="button" class="link" data-act="go-login">Voltar ao login</button></p>
+    </form>`;
+  else form=`
+    <form data-form="recovery">
+      <div class="field"><label for="pw">Nova senha</label><input id="pw" name="password" type="password" minlength="8" required autocomplete="new-password"></div>
+      <div class="field"><label for="pw2">Repita a senha</label><input id="pw2" name="password2" type="password" minlength="8" required autocomplete="new-password"></div>
+      <button class="btn primary" style="width:100%" ${state.busy?"disabled":""}>Salvar senha</button>
+    </form>`;
+  const demo = DEMO && mode==="login" ? `
+    <div class="demo-box"><b>Modo demonstração</b><br>Nada aqui é salvo online. Entre com um perfil de teste:<br>
+      <button type="button" class="btn sm ghost" data-act="demo-login" data-email="dra.helena@demo.com">Ver como cliente</button>
+      <button type="button" class="btn sm ghost" data-act="demo-login" data-email="kassia@demo.com">Ver como Kássia (admin)</button>
+      <br><button type="button" class="link" style="margin-top:8px;font-size:.8rem" data-act="demo-reset">Restaurar dados de exemplo</button></div>`:"";
+  return `
+  <div class="login">
+    <section class="login-side">
+      ${brand(true)}
+      <div><p class="eyebrow" style="color:var(--sage);margin-bottom:14px">Aprovação de conteúdo</p>
+        <h1>Seu conteúdo, <em>com a sua palavra final.</em></h1>
+        <p>Revise carrosséis, posts, reels, stories e legendas num só lugar. Aprove com um clique ou diga exatamente o que ajustar.</p></div>
+      <span></span>
+    </section>
+    <section class="login-main"><div class="login-card">
+      <p class="eyebrow">Kássia Britto</p><h2>${t}</h2><p class="muted sub">${s}</p>
+      ${err}${info}${form}${demo}
+    </div></section>
+  </div>`;
+}
+
+function portalView(){
+  const adm=isAdmin();
+  const top=`<div class="stripes"></div><header class="topbar"><div class="in">${brand()}
+    <div class="who"><span>${esc(state.user.name||state.user.email)}${adm?" · administradora":""}</span><button class="btn sm ghost" data-act="logout">Sair</button></div></div></header>`;
+  const demoBar = DEMO?`<div style="background:var(--sand);text-align:center;font-size:.82rem;padding:6px">Modo demonstração — dados só neste navegador</div>`:"";
+  let side="";
+  if(adm){
+    side=`<aside class="side"><p class="eyebrow" style="margin-bottom:6px">Clientes</p><h3>Suas abas</h3>
+      <div class="clients">${state.clients.map(c=>{
+        const n=state.posts.filter(p=>p.client_id===c.id&&p.status==="pendente").length;
+        return `<button class="client ${c.id===state.clientId?"on":""}" data-act="pick-client" data-id="${esc(c.id)}"><span>${esc(c.name||c.email)}<small>${esc(c.specialty||c.email||"")}</small></span>${n?`<span class="count" title="Aguardando aprovação">${n}</span>`:""}</button>`;}).join("")}
+      </div>
+      ${state.clients.length?"":`<p class="muted" style="font-size:.88rem">Nenhum cliente ainda. Crie o acesso em Supabase › Authentication › Users (veja o LEIA-ME).</p>`}
+    </aside>`;
+  }
+  return top+demoBar+`<main class="shell ${adm?"admin":""}">${side}<section>${mainView()}</section></main>`;
+}
+
+function mainView(){
+  const adm=isAdmin(), cl=adm?currentClient():state.user;
+  if(adm && !cl) return `<div class="empty"><h3>Comece criando um cliente</h3><p>Cadastre o e-mail e a senha dele em Supabase › Authentication › Users. Depois ele aparece aqui como uma aba.</p></div>`;
+  const all=visiblePosts();
+  const cnt=s=>all.filter(p=>p.status===s).length;
+  const tabs=[["todos","Todos",all.filter(p=>adm||p.status!=="rascunho").length],["pendente","Aguardando",cnt("pendente")],["ajuste","Ajustes",cnt("ajuste")],["aprovado","Aprovados",cnt("aprovado")]];
+  if(adm) tabs.push(["rascunho","Rascunhos",cnt("rascunho")]);
+  let list=all.filter(p=>state.status==="todos"||p.status===state.status);
+  if(state.format!=="all") list=list.filter(p=>p.format===state.format);
+  const pend=cnt("pendente");
+  const head=adm?`
+    <div class="page-head"><div><p class="eyebrow">Aba do cliente</p><h1>${esc(cl.name||cl.email)}</h1>
+      <p class="muted">${esc(cl.specialty||"")}${cl.specialty?" · ":""}${esc(cl.email||"")} · <button class="link" data-act="edit-client">editar</button></p></div>
+      <button class="btn primary" data-act="new-post">+ Novo conteúdo</button></div>`
+  :`<div class="page-head"><div><p class="eyebrow">Área do cliente</p><h1>Olá${firstName(cl.name)?", "+esc(firstName(cl.name)):""}.</h1>
+      <p class="muted">${pend?`Você tem <b>${pend}</b> ${pend===1?"conteúdo aguardando":"conteúdos aguardando"} sua aprovação.`:"Nada aguardando sua aprovação no momento."}</p></div></div>`;
+  return head+`<div class="checker" style="height:14px;background-size:14px 14px;border-radius:7px;margin-bottom:18px;opacity:.9"></div>
+    <div class="tabs">${tabs.map(([k,l,n])=>`<button class="tab ${state.status===k?"on":""}" data-act="filter-status" data-v="${k}">${l}<em>${n}</em></button>`).join("")}</div>
+    <div class="chips">${[["all","Todos os formatos"],...Object.entries(FORMATS).map(([k,v])=>[k,v.label])].map(([k,l])=>`<button class="chip ${state.format===k?"on":""}" data-act="filter-format" data-v="${k}">${l}</button>`).join("")}</div>
+    <div class="grid">${list.length?list.map(card).join(""):emptyState()}</div>`;
+}
+function emptyState(){
+  if(state.status==="pendente") return `<div class="empty"><h3>Tudo em dia</h3><p>Nenhum conteúdo aguardando aprovação.</p></div>`;
+  return `<div class="empty"><h3>Nada por aqui</h3><p>${isAdmin()?"Crie um novo conteúdo para este cliente.":"Quando houver novos conteúdos, eles aparecem aqui."}</p></div>`;
+}
+function thumbOf(p){
+  const f=FORMATS[p.format], m=(p.media||[])[0], u=m&&mediaSrc(m);
+  if(u&&m.type==="image") return `<img src="${esc(u)}" alt="" loading="lazy">`;
+  if(u&&m.type==="video") return `<video src="${esc(u)}#t=0.1" muted preload="metadata" playsinline></video>`;
+  if(p.format==="legenda"&&p.caption) return `<div class="thumb-ph" style="padding:16px;font-size:.95rem;text-align:left;justify-content:flex-start;align-items:flex-start;color:var(--ink);font-family:var(--sans)">${esc(p.caption.slice(0,170))}${p.caption.length>170?"…":""}</div>`;
+  return `<div class="thumb-ph"><i>${f.icon}</i><span>${esc(f.label)}</span></div>`;
+}
+const badge = s => `<span class="badge b-${s}">${STATUS[s]}</span>`;
+function card(p){
+  const f=FORMATS[p.format];
+  return `<button class="card" data-act="open-post" data-id="${esc(p.id)}">
+    <div class="thumb">${thumbOf(p)}<span class="badge b-${p.status}" style="position:absolute;top:10px;left:10px">${STATUS[p.status]}</span></div>
+    <div class="card-b"><div class="meta">${esc(f.label)}${p.version>1?` · v${p.version}`:""}</div><h3>${esc(p.title)}</h3><div class="when">${p.scheduled_for?"Publicação: "+fmtDate(p.scheduled_for):"Sem data definida"}</div></div></button>`;
+}
+
+/* ---------- modal ---------- */
+function renderModal(){
+  const m=state.modal, host=$("#modal");
+  if(!m){ host.innerHTML=""; document.body.style.overflow=""; return; }
+  document.body.style.overflow="hidden";
+  if(m.type==="post") host.innerHTML=postModal(m);
+  else if(m.type==="edit") host.innerHTML=editModal(m);
+  else if(m.type==="client") host.innerHTML=clientModal(m);
+  const sl=$(".slides",host);
+  if(sl){ const n=sl.children.length, c=$(".pv-count",host); sl.addEventListener("scroll",()=>{ const i=Math.round(sl.scrollLeft/sl.clientWidth); if(c) c.textContent=(i+1)+" / "+n; },{passive:true}); }
+}
+function closeModal(){ state.modal=null; renderModal(); }
+
+function previewOf(p){
+  const f=FORMATS[p.format], media=p.media||[];
+  if(p.format==="legenda") return "";
+  const ratio=f.ratio||"4/5";
+  if(!media.length) return `<div class="pv pv-empty" style="aspect-ratio:${ratio}"><div>${f.icon}<br>Nenhum arquivo anexado${p.link?`<br><a href="${esc(p.link)}" target="_blank" rel="noopener noreferrer">Abrir link do material</a>`:""}</div></div>`;
+  const slides=media.map(m=>{ const u=mediaSrc(m); if(!u) return `<div class="slide">Arquivo indisponível</div>`;
+    return `<div class="slide">${m.type==="video"?`<video src="${esc(u)}" controls playsinline preload="metadata"></video>`:`<img src="${esc(u)}" alt="${esc(m.name||"")}">`}</div>`; }).join("");
+  const nav = media.length>1 ? `<button class="pv-nav l" data-act="slide" data-d="-1" aria-label="Anterior">‹</button><button class="pv-nav r" data-act="slide" data-d="1" aria-label="Próximo">›</button><span class="pv-count">1 / ${media.length}</span>`:"";
+  return `<div class="pv" style="aspect-ratio:${ratio}"><div class="slides">${slides}</div>${nav}</div>`;
+}
+
+function postModal(m){
+  const p=state.posts.find(x=>x.id===m.id); if(!p) return "";
+  const f=FORMATS[p.format], adm=isAdmin();
+  const only=p.format==="legenda";
+  let actions="";
+  if(adm){
+    const resendLabel = p.status==="rascunho" ? "Enviar para aprovação" : "Reenviar para aprovação";
+    actions=`<div class="actions"><div class="btns">
+      <button class="btn ghost sm" data-act="edit-post" data-id="${esc(p.id)}">Editar</button>
+      ${p.status!=="pendente"?`<button class="btn primary sm" data-act="resend" data-id="${esc(p.id)}">${resendLabel}</button>`:""}
+      <button class="btn danger sm" data-act="delete-post" data-id="${esc(p.id)}">Excluir</button></div></div>`;
+  } else if(p.status==="pendente"){
+    if(m.adjusting){
+      actions=`<div class="actions"><div class="adj"><h3>O que precisa ajustar?</h3><p class="muted" style="font-size:.9rem">Marque o que se aplica e descreva com o máximo de detalhe.</p>
+        <div class="tagpick">${ADJ_TAGS.map(t=>`<button type="button" class="chip ${m.tags.includes(t)?"on":""}" data-act="tag" data-v="${esc(t)}">${esc(t)}</button>`).join("")}</div>
+        <div class="field" style="margin-bottom:10px"><label for="adjnote">Descreva o ajuste</label><textarea id="adjnote" placeholder="Ex.: trocar a foto da capa; corrigir o CRM na legenda; mudar a publicação para sexta.">${esc(m.note||"")}</textarea></div>
+        ${m.err?`<div class="err">${esc(m.err)}</div>`:""}
+        <div class="btns" style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary sm" data-act="send-adjust" ${m.busy?"disabled":""}>Enviar pedido de ajuste</button><button class="btn ghost sm" data-act="adjust-cancel">Cancelar</button></div></div></div>`;
+    } else if(m.confirming){
+      actions=`<div class="actions"><div class="confirm"><p>Confirmar a aprovação deste conteúdo? Ele seguirá para publicação como está.</p>
+        ${m.err?`<div class="err">${esc(m.err)}</div>`:""}
+        <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn ok sm" data-act="approve-confirm" ${m.busy?"disabled":""}>Sim, aprovar</button><button class="btn ghost sm" data-act="approve-cancel">Voltar</button></div></div></div>`;
+    } else {
+      actions=`<div class="actions"><div class="btns"><button class="btn ok" data-act="approve-ask">✓ Aprovar</button><button class="btn ghost" data-act="adjust-open">Solicitar ajuste</button></div></div>`;
+    }
+  } else if(p.status==="aprovado"){
+    actions=`<div class="actions"><div class="state-box okk"><b>✓ Aprovado${p.reviewed_at?" em "+fmtDT(p.reviewed_at):""}</b><span class="muted" style="font-size:.9rem">Este conteúdo está liberado para publicação.</span></div></div>`;
+  } else if(p.status==="ajuste"){
+    actions=`<div class="actions"><div class="state-box adjj"><b>Ajuste solicitado</b><span class="muted" style="font-size:.9rem">Estamos ajustando. Você será avisada quando houver uma nova versão para aprovar.</span></div></div>`;
+  }
+  const evs = m.events===null ? `<p class="muted" style="font-size:.88rem;margin-top:10px">Carregando histórico…</p>` :
+    m.events.length ? `<div class="timeline">${m.events.map(e=>`<div class="ev k-${e.kind}"><b>${EV_LABEL[e.kind]||e.kind}</b> <small>· ${fmtDT(e.created_at)}</small>${(e.tags||[]).length?`<div>${e.tags.map(t=>`<span class="tg">${esc(t)}</span>`).join("")}</div>`:""}${e.note?`<q>“${esc(e.note)}”</q>`:""}</div>`).join("")}</div>`:"";
+  const capBlock = (p.caption||only) ? `<div class="cap-h"><b>Legenda</b>${p.caption?`<button class="link" data-act="copy-caption" style="font-size:.84rem">Copiar</button>`:""}</div><div class="cap">${p.caption?esc(p.caption):'<span class="muted">Sem legenda.</span>'}</div>`:"";
+  const linkBlock = p.link?`<p style="margin-top:12px;font-size:.9rem"><a href="${esc(p.link)}" target="_blank" rel="noopener noreferrer" style="color:var(--wine);font-weight:700">Abrir material completo ↗</a></p>`:"";
+  return `<div class="overlay" data-act="overlay"><div class="modal ${only?"narrow legenda-only":""}" role="dialog" aria-modal="true" aria-label="${esc(p.title)}">
+    <button class="x" data-act="close-modal" aria-label="Fechar">×</button>
+    <div class="${only?"":"modal-grid"}">
+      ${only?"":`<div class="pv-col">${previewOf(p)}</div>`}
+      <div class="det-col"><p class="eyebrow">${esc(f.label)}${p.version>1?" · versão "+p.version:""}</p><h2>${esc(p.title)}</h2>
+        <div class="facts">${badge(p.status)}<span class="muted" style="font-size:.88rem">${p.scheduled_for?"Publicação prevista: "+fmtDate(p.scheduled_for):"Sem data definida"}</span></div>
+        ${capBlock}${linkBlock}${actions}
+        <p class="tl-h">Histórico</p>${evs||'<p class="muted" style="font-size:.88rem;margin-top:8px">Sem movimentações.</p>'}
+      </div></div></div></div>`;
+}
+
+function editModal(m){
+  const e=m.draft;
+  const client=state.clients.find(c=>c.id===e.client_id);
+  return `<div class="overlay" data-act="overlay"><div class="modal narrow" role="dialog" aria-modal="true"><button class="x" data-act="close-modal" aria-label="Fechar">×</button>
+  <form class="ed" data-form="post"><h2>${m.isNew?"Novo conteúdo":"Editar conteúdo"}</h2>
+    <p class="muted" style="margin:-8px 0 16px;font-size:.9rem">Cliente: <b>${esc(client?.name||client?.email||"")}</b></p>
+    ${m.err?`<div class="err">${esc(m.err)}</div>`:""}
+    <div class="field"><label for="f-title">Título (só para organização)</label><input id="f-title" name="title" required maxlength="140" value="${esc(e.title)}" placeholder="Ex.: Carrossel · 5 mitos sobre protetor solar"></div>
+    <div class="row2">
+      <div class="field"><label for="f-format">Formato</label><select id="f-format" name="format">${Object.entries(FORMATS).map(([k,v])=>`<option value="${k}" ${e.format===k?"selected":""}>${v.label}</option>`).join("")}</select></div>
+      <div class="field"><label for="f-date">Publicação prevista</label><input id="f-date" name="scheduled_for" type="date" value="${esc(e.scheduled_for||"")}"></div>
+    </div>
+    <div class="field"><label for="f-cap">Legenda</label><textarea id="f-cap" name="caption" placeholder="Texto que acompanha a publicação (inclua CRM/RQE se aplicável).">${esc(e.caption||"")}</textarea></div>
+    <div class="field"><label>Arquivos (na ordem dos slides)</label>
+      <div class="mlist">${e.media.map((x,i)=>{ const u=x.file?x._prev:mediaSrc(x);
+        return `<div class="mi"><div class="mt">${u?(x.type==="video"?`<video src="${esc(u)}" muted></video>`:`<img src="${esc(u)}" alt="">`):"—"}</div><span class="nm">${esc(x.name||"arquivo")}</span>
+        <button type="button" data-act="mv" data-i="${i}" data-d="-1" aria-label="Subir" ${i===0?"disabled":""}>↑</button><button type="button" data-act="mv" data-i="${i}" data-d="1" aria-label="Descer" ${i===e.media.length-1?"disabled":""}>↓</button><button type="button" data-act="rm" data-i="${i}" aria-label="Remover">×</button></div>`;}).join("")}</div>
+      <label class="drop" style="cursor:pointer">+ Adicionar imagens ou vídeos<input type="file" id="f-files" accept="image/*,video/*" multiple hidden></label></div>
+    <div class="field"><label for="f-link">Link do material completo (opcional)</label><input id="f-link" name="link" type="url" placeholder="https://drive.google.com/…" value="${esc(e.link||"")}"></div>
+    <label class="check"><input type="checkbox" name="draft" ${e.status==="rascunho"?"checked":""}> Salvar como rascunho (o cliente ainda não vê)</label>
+    <div class="ed-foot"><button type="button" class="btn ghost" data-act="close-modal">Cancelar</button><button class="btn primary" ${m.busy?"disabled":""}>${m.busy?"Salvando…":"Salvar"}</button></div>
+  </form></div></div>`;
+}
+function clientModal(m){
+  const c=m.draft;
+  return `<div class="overlay" data-act="overlay"><div class="modal narrow"><button class="x" data-act="close-modal" aria-label="Fechar">×</button>
+  <form class="ed" data-form="client"><h2>Editar cliente</h2>
+    <div class="field"><label for="c-name">Nome (como aparece na aba)</label><input id="c-name" name="name" required value="${esc(c.name||"")}"></div>
+    <div class="field"><label for="c-spec">Especialidade</label><input id="c-spec" name="specialty" value="${esc(c.specialty||"")}"></div>
+    <p class="muted" style="font-size:.85rem;margin-bottom:16px">E-mail e senha são gerenciados em Supabase › Authentication › Users.</p>
+    <div class="ed-foot"><button type="button" class="btn ghost" data-act="close-modal">Cancelar</button><button class="btn primary">Salvar</button></div>
+  </form></div></div>`;
+}
+
+/* ============================================================
+   AÇÕES
+   ============================================================ */
+async function openPost(id){
+  state.modal={type:"post",id,events:null,adjusting:false,confirming:false,tags:[],note:"",err:"",busy:false};
+  renderModal();
+  try{
+    const ev=await Api.events(id);
+    if(state.modal?.id===id){ state.modal.events=ev; renderModal(); }
+  }catch{ if(state.modal?.id===id){ state.modal.events=[]; renderModal(); } }
+}
+async function refresh(keepModal){
+  await loadData();
+  render();
+}
+function friendly(err){
+  const m=(err&&err.message)||String(err);
+  if(/Invalid login credentials/i.test(m)) return "E-mail ou senha incorretos.";
+  if(/Email not confirmed/i.test(m)) return "Este e-mail ainda não foi confirmado.";
+  if(/rate limit|too many/i.test(m)) return "Muitas tentativas. Aguarde um pouco e tente de novo.";
+  if(/Failed to fetch|NetworkError/i.test(m)) return "Sem conexão. Verifique a internet e tente de novo.";
+  return m;
+}
+
+document.addEventListener("click", async ev=>{
+  const el=ev.target.closest("[data-act]"); if(!el) return;
+  const act=el.dataset.act, m=state.modal;
+  if(act==="overlay"){ if(ev.target===el) closeModal(); return; }
+  try{
+    switch(act){
+      case "go-reset": state.mode="reset"; state.error=state.info=""; render(); break;
+      case "go-login": state.mode="login"; state.error=state.info=""; render(); break;
+      case "logout": await Api.signOut(); Object.assign(state,{user:null,posts:[],clients:[],clientId:null,modal:null,mode:"login",error:"",info:""}); render(); break;
+      case "demo-login": await Api.signIn(el.dataset.email,"demo"); await enter(); break;
+      case "demo-reset": Api.reset_demo(); break;
+      case "pick-client": state.clientId=el.dataset.id; state.status="todos"; state.format="all"; render(); break;
+      case "filter-status": state.status=el.dataset.v; render(); break;
+      case "filter-format": state.format=el.dataset.v; render(); break;
+      case "open-post": await openPost(el.dataset.id); break;
+      case "close-modal": closeModal(); break;
+      case "slide": { const sl=$(".slides"); if(sl) sl.scrollBy({left:sl.clientWidth*Number(el.dataset.d),behavior:"smooth"}); break; }
+      case "copy-caption": { const p=state.posts.find(x=>x.id===m.id); await navigator.clipboard.writeText(p.caption||""); toast("Legenda copiada"); break; }
+
+      /* cliente: aprovar / ajustar */
+      case "approve-ask": m.confirming=true; m.err=""; renderModal(); break;
+      case "approve-cancel": m.confirming=false; m.err=""; renderModal(); break;
+      case "approve-confirm":
+        m.busy=true; m.err=""; renderModal();
+        try{ await Api.review(m.id,"aprovado"); toast("Conteúdo aprovado ✓"); closeModal(); await refresh(); }
+        catch(e){ m.busy=false; m.err=friendly(e); renderModal(); }
+        break;
+      case "adjust-open": m.adjusting=true; m.err=""; renderModal(); break;
+      case "adjust-cancel": m.adjusting=false; m.err=""; renderModal(); break;
+      case "tag": { const t=el.dataset.v; m.tags = m.tags.includes(t)?m.tags.filter(x=>x!==t):[...m.tags,t]; renderModal(); break; }
+      case "send-adjust": {
+        const note=($("#adjnote")?.value||"").trim(); m.note=note;
+        if(!note){ m.err="Descreva o ajuste para que possamos fazer certo."; renderModal(); break; }
+        m.busy=true; m.err=""; renderModal();
+        try{ await Api.review(m.id,"ajuste",note,m.tags); toast("Pedido de ajuste enviado"); closeModal(); await refresh(); }
+        catch(e){ m.busy=false; m.err=friendly(e); renderModal(); }
+        break;
+      }
+
+      /* admin */
+      case "new-post":
+        state.modal={type:"edit",isNew:true,err:"",busy:false,removed:[],draft:{id:uid(),client_id:state.clientId,title:"",format:"carrossel",caption:"",media:[],link:"",scheduled_for:"",status:"pendente",version:1}}; renderModal(); break;
+      case "edit-post": {
+        const p=state.posts.find(x=>x.id===el.dataset.id);
+        state.modal={type:"edit",isNew:false,err:"",busy:false,removed:[],draft:{...p,media:(p.media||[]).map(x=>({...x}))}}; renderModal(); break;
+      }
+      case "mv": { const d=m.draft, i=Number(el.dataset.i), j=i+Number(el.dataset.d); syncDraft(); [d.media[i],d.media[j]]=[d.media[j],d.media[i]]; renderModal(); break; }
+      case "rm": { syncDraft(); const [x]=m.draft.media.splice(Number(el.dataset.i),1); if(x.path) m.removed.push(x.path); renderModal(); break; }
+      case "resend": {
+        const p=state.posts.find(x=>x.id===el.dataset.id);
+        await Api.resend(p); toast("Enviado para aprovação"); closeModal(); await refresh(); break;
+      }
+      case "delete-post": {
+        const p=state.posts.find(x=>x.id===el.dataset.id);
+        if(!confirm(`Excluir "${p.title}"? Isso apaga também o histórico e os arquivos.`)) break;
+        await Api.deletePost(p); toast("Conteúdo excluído"); closeModal(); await refresh(); break;
+      }
+      case "edit-client": { const c=currentClient(); state.modal={type:"client",draft:{...c}}; renderModal(); break; }
+    }
+  }catch(e){ console.error(e); toast(friendly(e)); }
+});
+
+/* guarda o que foi digitado no editor antes de re-renderizar */
+function syncDraft(){
+  const f=$("form[data-form=post]"); if(!f||!state.modal?.draft) return;
+  const d=state.modal.draft, fd=new FormData(f);
+  d.title=fd.get("title")||""; d.format=fd.get("format"); d.scheduled_for=fd.get("scheduled_for")||"";
+  d.caption=fd.get("caption")||""; d.link=fd.get("link")||""; d.status=fd.get("draft")?"rascunho":(d.status==="rascunho"?"pendente":d.status);
+}
+
+document.addEventListener("input", ev=>{
+  if(state.modal?.type==="post" && ev.target.id==="adjnote") state.modal.note=ev.target.value;
+});
+document.addEventListener("change", ev=>{
+  if(ev.target.id==="f-files" && state.modal?.type==="edit"){
+    syncDraft();
+    for(const file of ev.target.files){
+      state.modal.draft.media.push({file,name:file.name,type:file.type.startsWith("video")?"video":"image",_prev:URL.createObjectURL(file)});
+    }
+    renderModal();
+  }
+});
+document.addEventListener("keydown", ev=>{ if(ev.key==="Escape" && state.modal) closeModal(); });
+
+document.addEventListener("submit", async ev=>{
+  const form=ev.target.closest("form[data-form]"); if(!form) return;
+  ev.preventDefault();
+  const kind=form.dataset.form, fd=new FormData(form);
+  try{
+    if(kind==="login"){
+      state.busy=true; state.error=""; render();
+      try{ await Api.signIn(String(fd.get("email")).trim().toLowerCase(),String(fd.get("password"))); state.busy=false; await enter(); }
+      catch(e){ state.busy=false; state.error=friendly(e); render(); }
+    }
+    else if(kind==="reset"){
+      state.busy=true; render();
+      try{ await Api.reset(String(fd.get("email")).trim()); }catch(e){ /* não revela se o e-mail existe */ }
+      state.busy=false; state.mode="login"; state.error=""; state.info="Se o e-mail estiver cadastrado, você receberá um link para criar uma nova senha."; render();
+    }
+    else if(kind==="recovery"){
+      if(fd.get("password")!==fd.get("password2")){ state.error="As senhas não são iguais."; render(); return; }
+      state.busy=true; state.error=""; render();
+      try{ await Api.setPassword(String(fd.get("password"))); state.recovery=false; state.busy=false; history.replaceState(null,"",location.pathname); toast("Senha atualizada"); await enter(); }
+      catch(e){ state.busy=false; state.error=friendly(e); render(); }
+    }
+    else if(kind==="client"){
+      const patch={name:String(fd.get("name")).trim(),specialty:String(fd.get("specialty")||"").trim()||null};
+      await Api.saveClient(state.modal.draft.id,patch); closeModal(); toast("Cliente atualizado"); await refresh();
+    }
+    else if(kind==="post"){
+      const m=state.modal; syncDraft(); const d=m.draft;
+      if(!d.title.trim()){ m.err="Dê um título ao conteúdo."; renderModal(); return; }
+      m.busy=true; m.err=""; renderModal();
+      try{
+        const media=[]; let i=0;
+        for(const x of d.media){
+          if(x.file){ media.push(await Api.upload(d.client_id,d.id,x.file,i++)); }
+          else media.push(x);
+        }
+        const wasNew=m.isNew, prevStatus=state.posts.find(p=>p.id===d.id)?.status;
+        const finalStatus=d.status==="rascunho"?"rascunho":(wasNew?"pendente":d.status);
+        const post={...d,title:d.title.trim(),media,status:finalStatus};
+        const evKind = (wasNew && finalStatus==="pendente") ? "criado" : (prevStatus==="rascunho"&&finalStatus==="pendente"?"criado":null);
+        await Api.savePost(post,evKind);
+        await Api.removeFiles(m.removed||[]);
+        closeModal(); toast(finalStatus==="rascunho"?"Rascunho salvo":"Conteúdo salvo"); await refresh();
+      }catch(e){ m.busy=false; m.err=friendly(e); renderModal(); }
+    }
+  }catch(e){ console.error(e); toast(friendly(e)); }
+});
+
+/* ============================================================
+   INÍCIO
+   ============================================================ */
+(async function boot(){
+  Api.onRecovery(()=>{ state.recovery=true; render(); });
+  try{
+    const s=await Api.session();
+    if(s && !state.recovery) await enter(); else render();
+  }catch(e){ console.error(e); state.error=friendly(e); render(); }
+})();
+</script>
+</body>
+</html>
